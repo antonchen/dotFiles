@@ -46,7 +46,10 @@ cp -rf ~/.Wallpaper $BAK_Home
 
 
 cd $Backup_Path
-[[ -d $Backup_Path/.git ]]||git init&&git remote add origin https://github.com/antonchen/dotFiles.git
+if [ ! -d $Backup_Path/.git ];then
+    git init
+    git remote add origin git@github.com:antonchen/dotFiles.git
+fi
 git add .
 git commit -m "Auto Backup $(date +'%Y-%m-%d %H:%M')"
 git push -u origin master
