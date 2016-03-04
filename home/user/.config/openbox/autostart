@@ -1,7 +1,0 @@
-compton &
-sleep 1
-tint2 &
-sleep 0.2
-feh --bg-scale ~/.Wallpaper/nachalo-inception-volchok.jpg
-sleep 0.2
-conky &
