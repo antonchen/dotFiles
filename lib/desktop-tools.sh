@@ -45,7 +45,8 @@ fi
 tput setaf 4
 echo -e "\n*Installing Network Manager."
 tput sgr0
-install_package network-manager-gnome network-manager-openvpn-gnome network-manager-pptp-gnome network-manager-vpnc-gnome
+install_package network-manager-gnome network-manager-pptp-gnome
+# network-manager-openvpn-gnome network-manager-vpnc-gnome
 tput setaf 4
 echo -e "\n*Setting Network Manager."
 tput sgr0
@@ -92,10 +93,28 @@ install_package gksu
 tput setaf 4
 echo -e "\n*Installing Terminal"
 tput sgr0
-install_package terminator rxvt-unicode-256color zsh
+install_package rxvt-unicode-256color zsh
+if [ -d /etc/zsh ];then
+cat >> /etc/zsh/zprofile <<_ZP_
+
+PATH="$PATH:$HOME/bin"
+export PATH
+
+_src_etc_profile()
+{
+    # source profile
+    if [ -f /etc/profile ]; then
+        emulate sh -c 'source /etc/profile'
+    fi
+}
+_src_etc_profile
+
+unset -f _src_etc_profile
+_ZP_
+fi
 # Copy config files
-/bin/cp -rf $dotFiles_PATH/etc/X11/app-defaults/*XTerm /etc/X11/app-defaults/
-/bin/cp -rf $dotFiles_PATH/home/user/.Xdefaults ~$DUSER/
+#/bin/cp -rf $dotFiles_PATH/etc/X11/app-defaults/*XTerm /etc/X11/app-defaults/
+#/bin/cp -rf $dotFiles_PATH/home/user/.Xdefaults ~$DUSER/
 
 # Install compton
 install_package compton
@@ -116,12 +135,12 @@ tput sgr0
 install_package flashplugin-nonfree flashplugin-nonfree-extrasound
 
 # Install Xephyr
-tput setaf 4
-echo -e "\n*Installing Xephyr."
-tput sgr0
-install_package xserver-xephyr
-
-echo
+# tput setaf 4
+# echo -e "\n*Installing Xephyr."
+# tput sgr0
+# install_package xserver-xephyr
+# 
+# echo
 
 tput setaf 6
 cat << _END_

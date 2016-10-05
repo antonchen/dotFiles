@@ -1,0 +1,204 @@
+# i3wm config by Anton Chen
+# 基本设置{
+# 设置Mod
+set $mod Mod1
+
+# 设置字体
+font pango:WenQuanYi Micro Hei Mono 10
+
+# 重新加载配置文件
+bindsym $mod+Shift+c reload
+# 重启i3
+bindsym $mod+Shift+r restart
+# 电源管理: Pause键弹出
+set $mode_system 系统:锁屏(L) 注销(E) 关机(S) 重启(R) 取消(Esc)
+bindsym Pause mode "$mode_system"
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3lock -i .wallpaper/wallhaven-51072.png
+    bindsym e exec i3-msg exit
+    bindsym s exec sudo systemctl poweroff
+    bindsym r exec sudo systemctl reboot
+    bindsym Escape mode "default"
+}
+
+# 设置方向键：上下左右 (不能与已绑定功能键冲突)
+set $up     k
+set $down   j
+set $left   h
+set $right  l
+
+# 设置工作区名称
+set $n1 1 
+set $n2 2 
+set $n3 3 
+set $n4 4 
+set $n5 5 
+set $n6 6 
+set $n7 7 
+set $n8 8 
+set $n9 9 
+set $n0 10 
+
+# 新窗口边框
+new_window 1pixel
+new_float none
+# 指定应用窗口边框
+for_window [class="(?i)Urxvt"]  border 1pixel
+for_window [class="Thunar"]     border none
+# 指定应用工作区
+assign [class="(?i)Urxvt"]      →  $n1
+assign [class="(?i)pycharm"]    →  $n2
+assign [class="(?i)GVIM(?i)"]   →  $n3
+assign [class="(?i)chromium"]   →  $n4
+assign [class="(?i)Iceweasel"]  →  $n4
+assign [class="Thunar"]         →  $n5
+
+# 设置颜色
+#                       bord     bg     text    indicator (split)
+client.focused          #4c7899 #0080CC #E1F1F9 #2e9ef4
+client.focused_inactive #333333 #5f676a #E1F1F9 #484e50
+client.unfocused        #333333 #222222 #888888 #292d2e
+client.urgent           #2f343a #E35850 #E1F1F9 #E35850
+client.placeholder      #000000 #0c0c0c #E1F1F9 #000000
+
+# 设置状态栏
+bar {
+	status_command $HOME/.config/i3/conky-i3bar
+	mode dock
+	position top
+
+    colors {
+          background #222222
+          statusline #E3E3E3
+          separator  #222222
+          #                  bord    bg      text
+          focused_workspace  #0092DD #0088CC #EEEEEE
+          active_workspace   #D6ECF6 #333333 #D0D0D0
+          inactive_workspace #2A2A2A #333333 #D0D0D0
+          urgent_workspace   #E35850 #E35850 #EEEEEE
+    }
+}
+# }
+
+
+
+# 启动应用{
+# { 自启动列表：虚拟机|网络|输入法|壁纸
+exec --no-startup-id vmware-user-suid-wrapper
+exec --no-startup-id compton
+exec --no-startup-id nm-applet
+exec --no-startup-id fcitx
+exec --no-startup-id feh --bg-scale $HOME/.wallpaper/wallhaven-51072.png
+# }
+
+# 启动终端
+bindsym $mod+Return exec --no-startup-id urxvt
+bindsym $mod+Shift+Return exec --no-startup-id gksudo urxvt
+# Thunar
+bindsym Mod4+f exec --no-startup-id thunar
+bindsym Mod4+Shift+f exec --no-startup-id gksudo thunar
+# dmenu快速启动
+bindsym $mod+d exec --no-startup-id dmenu_run -i -l 20 -fn 'DejaVu Sans-10'
+# }
+
+# 工作区{
+# 设置工作区
+bindsym $mod+1 workspace $n1
+bindsym $mod+2 workspace $n2
+bindsym $mod+3 workspace $n3
+bindsym $mod+4 workspace $n4
+bindsym $mod+5 workspace $n5
+bindsym $mod+6 workspace $n6
+bindsym $mod+7 workspace $n7
+bindsym $mod+8 workspace $n8
+bindsym $mod+9 workspace $n9
+bindsym $mod+0 workspace $n0
+# 移动窗口到某个工作区
+bindsym $mod+Shift+1 move container to workspace $n1
+bindsym $mod+Shift+2 move container to workspace $n2
+bindsym $mod+Shift+3 move container to workspace $n3
+bindsym $mod+Shift+4 move container to workspace $n4
+bindsym $mod+Shift+5 move container to workspace $n5
+bindsym $mod+Shift+6 move container to workspace $n6
+bindsym $mod+Shift+7 move container to workspace $n7
+bindsym $mod+Shift+8 move container to workspace $n8
+bindsym $mod+Shift+9 move container to workspace $n9
+bindsym $mod+Shift+0 move container to workspace $n0
+# }
+
+# 窗口相关{
+# 使用Mod + 鼠标拖动窗口
+floating_modifier $mod
+
+# 关闭窗口
+bindsym $mod+Shift+q kill
+
+# 设置新窗口位置（水平）
+bindsym $mod+g split h
+# 设置新窗口位置（垂直）
+bindsym $mod+v split v
+
+# 调整窗口大小
+bindsym $mod+r mode "大小调整"
+# 全屏当前窗口
+bindsym $mod+f fullscreen toggle
+
+# 设置当前窗口边框
+bindsym $mod+t border normal
+bindsym $mod+y border 1pixel
+bindsym $mod+u border none
+
+# 设置窗口平铺样式（堆叠，标签，分离）
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# 设置当前窗口 浮动/平铺
+bindsym $mod+Shift+space floating toggle
+# 在浮动窗口和平铺窗口之间切换
+bindsym $mod+space focus mode_toggle
+
+# 设置一个堆叠
+bindsym $mod+a focus parent
+# }
+
+# 其它设置{
+# 移动焦点到其它窗口
+bindsym $mod+$up    focus up
+bindsym $mod+$down  focus down
+bindsym $mod+$left  focus left
+bindsym $mod+$right focus right
+# 移动焦点到其它窗口（光标键）
+bindsym $mod+Up    focus up
+bindsym $mod+Down  focus down
+bindsym $mod+Left  focus left
+bindsym $mod+Right focus right
+
+# 移动当前窗口
+bindsym $mod+Shift+$up    move up
+bindsym $mod+Shift+$down  move down
+bindsym $mod+Shift+$left  move left
+bindsym $mod+Shift+$right move right
+# 移动当前窗口（光标键）
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Right move right
+
+# 调整当前窗口大小
+mode "大小调整" {
+	    # 快捷键调整大小
+        bindsym $up    resize shrink height 10 px or 10 ppt
+        bindsym $down  resize grow   height 10 px or 10 ppt
+        bindsym $left  resize shrink width  10 px or 10 ppt
+        bindsym $right resize grow   width  10 px or 10 ppt
+        # 光标键调整大小
+        bindsym Down  resize grow   height 10 px or 10 ppt
+        bindsym Up    resize shrink height 10 px or 10 ppt
+        bindsym Left  resize shrink width  10 px or 10 ppt
+        bindsym Right resize grow   width  10 px or 10 ppt
+        # 按回车或Esc退出
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+# }

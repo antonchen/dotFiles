@@ -1,2 +1,2 @@
-# Awesome dotFiles
-run  `bash Install.sh` Install Awesome and dotFiles in Debian mini
+# i3WM dotFiles
+run  `bash Install.sh` Install i3WM and dotFiles in Debian mini

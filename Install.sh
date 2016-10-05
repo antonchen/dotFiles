@@ -9,7 +9,7 @@
 # Author EMail: contact@antonchen.com
 
 tput setaf 4
-echo -e "\n*Installing Awesome in Debian\n"
+echo -e "\n*Installing i3wm in Debian\n"
 tput sgr0
 
 # Read DUSER
@@ -117,8 +117,8 @@ if [ $? -ne 0 ]; then
     exit $?
 fi
 
-# Install Awesome
-bash lib/awesome.sh
+# Install i3wm
+bash lib/i3wm.sh
 if [ $? -ne 0 ]; then
     exit $?
 fi

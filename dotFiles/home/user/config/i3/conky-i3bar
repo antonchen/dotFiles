@@ -1,0 +1,6 @@
+#!/bin/sh
+# Send Json header
+echo '{"version":1}\n[\n[],'
+
+# Run conky
+exec conky -c $HOME/.config/i3/conkyrc

@@ -45,19 +45,11 @@ tput setaf 4
 echo -e "*Setting apt sources.\n"
 tput sgr0
 cat > /etc/apt/sources.list <<_APT_
-
-# deb cdrom:[Debian GNU/Linux 8.2.0 _Jessie_ - Official amd64 CD Binary-1 20150906-11:13]/ jessie main
-
-deb http://mirrors.ustc.edu.cn/debian jessie main contrib non-free
-deb-src http://mirrors.ustc.edu.cn/debian jessie main contrib non-free
-
-deb http://mirrors.ustc.edu.cn/debian jessie-proposed-updates main contrib non-free
-deb-src http://mirrors.ustc.edu.cn/debian jessie-proposed-updates main contrib non-free
-
-deb http://mirrors.ustc.edu.cn/debian jessie-updates main contrib non-free
-deb-src http://mirrors.ustc.edu.cn/debian jessie-updates main contrib non-free
+deb http://mirrors.ustc.edu.cn/debian testing main contrib non-free
+deb-src http://mirrors.ustc.edu.cn/debian testing main contrib non-free
 _APT_
 apt-get update
+apt-get upgrade -y
 
 # Install aptitude
 tput setaf 4
